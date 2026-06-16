@@ -9,12 +9,14 @@ urlpatterns = [
     path("add/", views.program_add, name="add_program"),
     path("<int:pk>/edit/", views.program_edit, name="edit_program"),
     path("<int:pk>/delete/", views.program_delete, name="program_delete"),
+
     # Course urls
     path("course/<slug>/detail/", views.course_single, name="course_detail"),
     path("<int:pk>/course/add/", views.course_add, name="course_add"),
     path("course/<slug>/edit/", views.course_edit, name="edit_course"),
     path("course/delete/<slug>/", views.course_delete, name="delete_course"),
-    # CourseAllocation urls
+
+    # Course Allocation urls
     path(
         "course/assign/",
         views.CourseAllocationFormView.as_view(),
@@ -31,9 +33,12 @@ urlpatterns = [
         name="edit_allocated_course",
     ),
     path(
-        "course/<int:pk>/deallocate/", views.deallocate_course, name="course_deallocate"
+        "course/<int:pk>/deallocate/",
+        views.deallocate_course,
+        name="course_deallocate",
     ),
-    # File uploads urls
+
+    # File Upload urls
     path(
         "course/<slug>/documentations/upload/",
         views.handle_file_upload,
@@ -49,7 +54,8 @@ urlpatterns = [
         views.handle_file_delete,
         name="upload_file_delete",
     ),
-    # Video uploads urls
+
+    # Video Upload urls
     path(
         "course/<slug>/video_tutorials/upload/",
         views.handle_video_upload,
@@ -70,8 +76,28 @@ urlpatterns = [
         views.handle_video_delete,
         name="upload_video_delete",
     ),
-    # course registration
-    path("course/registration/", views.course_registration, name="course_registration"),
-    path("course/drop/", views.course_drop, name="course_drop"),
-    path("my_courses/", views.user_course_list, name="user_course_list"),
+
+    # Course Registration
+    path(
+        "course/registration/",
+        views.course_registration,
+        name="course_registration",
+    ),
+    path(
+        "course/drop/",
+        views.course_drop,
+        name="course_drop",
+    ),
+    path(
+        "my_courses/",
+        views.user_course_list,
+        name="user_course_list",
+    ),
+
+    # Feedback Reports
+    path(
+        "feedback-report/",
+        views.feedback_report,
+        name="feedback_report",
+    ),
 ]

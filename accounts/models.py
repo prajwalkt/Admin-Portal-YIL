@@ -72,6 +72,11 @@ class User(AbstractUser):
     is_lecturer = models.BooleanField(default=False)
     is_parent = models.BooleanField(default=False)
     is_dep_head = models.BooleanField(default=False)
+
+    is_trainer = models.BooleanField(default=False)
+    is_training_manager = models.BooleanField(default=False)
+    is_finance = models.BooleanField(default=False)
+    is_regional_manager = models.BooleanField(default=False)
     gender = models.CharField(max_length=1, choices=GENDERS, blank=True, null=True)
     phone = models.CharField(max_length=60, blank=True, null=True)
     address = models.CharField(max_length=60, blank=True, null=True)
@@ -204,6 +209,24 @@ class Parent(models.Model):
 class DepartmentHead(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     department = models.ForeignKey(Program, on_delete=models.CASCADE, null=True)
+
+class TrainerProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    employee_id = models.CharField(max_length=50, blank=True)
+
+    department = models.CharField(max_length=100, blank=True)
+
+    expertise = models.TextField(blank=True)
+
+    experience_years = models.IntegerField(default=0)
+
+    trainer_rating = models.FloatField(default=0)
+
+    certifications = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.user.get_full_name    
 
     class Meta:
         ordering = ("-user__date_joined",)

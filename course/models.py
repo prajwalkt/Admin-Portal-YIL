@@ -254,3 +254,129 @@ class CourseOffer(models.Model):
 
     def __str__(self):
         return str(self.dep_head)
+class TrainingCalendar(models.Model):
+    TRAINING_TYPES = (
+        ('CILT', 'Classroom Training'),
+        ('VILT', 'Virtual Training'),
+        ('SITE', 'Site Training'),
+    )
+
+    title = models.CharField(max_length=200)
+
+    training_type = models.CharField(
+        max_length=20,
+        choices=TRAINING_TYPES
+    )
+
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    start_date = models.DateField()
+
+    end_date = models.DateField()
+
+    trainer_name = models.CharField(
+        max_length=200,
+        blank=True
+    )
+
+    location = models.CharField(
+        max_length=200,
+        blank=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return self.title
+
+
+class Certificate(models.Model):
+
+    certificate_no = models.CharField(
+        max_length=100,
+        unique=True
+    )
+
+    participant_name = models.CharField(
+        max_length=200
+    )
+
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE
+    )
+
+    issue_date = models.DateField()
+
+    certificate_pdf = models.FileField(
+        upload_to='certificates/'
+    )
+
+    def __str__(self):
+        return self.certificate_no
+
+
+class Testimonial(models.Model):
+
+    name = models.CharField(max_length=200)
+
+    company = models.CharField(
+        max_length=200,
+        blank=True
+    )
+
+    feedback = models.TextField()
+
+    image = models.ImageField(
+        upload_to='testimonials/',
+        blank=True,
+        null=True
+    )
+
+    approved = models.BooleanField(
+        default=False
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return self.name  
+
+class FeedbackQuestion(models.Model):
+    question = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.question
+
+
+class FeedbackResponse(models.Model):
+    participant_name = models.CharField(max_length=200)
+
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE
+    )
+
+    trainer_name = models.CharField(max_length=200)
+
+    score = models.IntegerField()
+
+    remarks = models.TextField(
+        blank=True
+    )
+
+    submitted_on = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return self.participant_name      

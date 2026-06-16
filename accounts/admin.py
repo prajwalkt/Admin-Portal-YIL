@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import User, Student, Parent
+from .models import (
+    User,
+    Student,
+    Parent,
+    DepartmentHead,
+    TrainerProfile,
+)
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -13,6 +19,7 @@ class UserAdmin(admin.ModelAdmin):
         "is_parent",
         "is_staff",
     ]
+
     search_fields = [
         "username",
         "first_name",
@@ -33,3 +40,5 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(User, UserAdmin)
 admin.site.register(Student)
 admin.site.register(Parent)
+admin.site.register(DepartmentHead)
+admin.site.register(TrainerProfile)

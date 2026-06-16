@@ -26,6 +26,8 @@ from course.models import (
     Program,
     Upload,
     UploadVideo,
+    FeedbackQuestion,
+    FeedbackResponse,
 )
 from result.models import TakenCourse
 
@@ -502,3 +504,28 @@ def user_course_list(request):
 
     # For other users
     return render(request, "course/user_course_list.html")
+@login_required
+@lecturer_required
+def feedback_report(request):
+
+    responses = FeedbackResponse.objects.all().order_by("-submitted_on")
+
+    avg_score = 0
+
+    if responses.exists():
+        avg_score = (
+            sum(r.score for r in responses)
+            / responses.count()
+        )
+
+    context = {
+        "responses": responses,
+        "avg_score": round(avg_score, 2),
+        "title": "Feedback Report",
+    }
+
+    return render(
+        request,
+        "course/feedback_report.html",
+        context,
+    )
