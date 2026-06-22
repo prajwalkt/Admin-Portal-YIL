@@ -18,7 +18,7 @@ from accounts.forms import (
     ProgramUpdateForm,
     StaffAddForm,
     StudentAddForm,
-)
+) 
 from accounts.models import Parent, Student, User
 from core.models import Semester, Session
 from course.models import Course
